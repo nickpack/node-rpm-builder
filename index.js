@@ -16,7 +16,7 @@ let logger;
  *
  * @param  {String} tmpDir the path where the folder structure will reside
  */
-function setupTempDir(tmpDir) {
+export function setupTempDir(tmpDir) {
   const rpmStructure = ['BUILD', 'BUILDROOT', 'RPMS', 'SOURCES', 'SPECS', 'SRPMS'];
 
   // If the tmpDir exists (probably from previous build), delete it first
@@ -39,13 +39,13 @@ function setupTempDir(tmpDir) {
  * @param  {Array} excludeFiles patterns/files to ignore
  * @return {Array}              expanded list of files to ignore
  */
-function retrieveFilesToExclude(excludeFiles) {
+export function retrieveFilesToExclude(excludeFiles) {
   return globby.sync(excludeFiles).map(function (file) {
     return path.normalize(file);
   });
 }
 
-function checkDirective(directive) {
+export function checkDirective(directive) {
   if (typeof directive === 'undefined') {
     return true;
   }
@@ -62,7 +62,7 @@ function checkDirective(directive) {
  * @param  {String} buildRoot     where all files should be copied into
  * @return {Array}                list of files to include in the RPM
  */
-function prepareFiles(files, excludeFiles, buildRoot) {
+export function prepareFiles(files, excludeFiles, buildRoot) {
   const _files = [];
   const filesToExclude = retrieveFilesToExclude(excludeFiles);
 
@@ -112,7 +112,7 @@ function prepareFiles(files, excludeFiles, buildRoot) {
  * @param  {Object}   execOpts   options to pass to exec call
  * @param  {Function} cb         callback function to be executed when the task is done
  */
-function buildRpm(buildRoot, specFile, rpmDest, execOpts, cb) {
+export function buildRpm(buildRoot, specFile, rpmDest, execOpts, cb) {
   // Build the RPM package.
   const cmd = [
     'rpmbuild',
@@ -150,7 +150,7 @@ function buildRpm(buildRoot, specFile, rpmDest, execOpts, cb) {
   });
 }
 
-function rpm(options, cb) {
+export function rpm(options, cb) {
   if (!options || typeof options !== 'object') {
     throw new TypeError('options object is missing');
   }
